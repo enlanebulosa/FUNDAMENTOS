@@ -1,25 +1,32 @@
 import pilasengine
 pilas = pilasengine.iniciar()
 #pilas.fondos.Selva()
-puntaje = pilas.actores.Puntaje(color='blanco')
-puntaje.x = -300
-puntaje.y = 220
 cantidad_vidas = 3
+# puntaje = pilas.actores.Puntaje(color='blanco')
 puntajes=[]
 nombre=''
 
 def reiniciar():
 
-    # Obtiene todos los actores de la pantalla.
-    actores = pilas.actores.listar_actores()
-    
-    # Elimina todos los actores excepto el fondo y el puntaje
-    for actor in actores:
-        if actor not in [puntaje, pilas.escena.fondo]:
-            actor.eliminar()
+    global puntaje
 
+    # Obtiene todos los actores de la pantalla.
+    # actores = pilas.actores.listar_actores()
+    #
+    # # Elimina todos los actores excepto el fondo y el puntaje
+    # for actor in actores:
+    #    if actor not in [puntaje, pilas.escena.fondo]:
+    #        actor.eliminar()
+
+    # Cambio de escena
     pilas.escenas.Normal()
     pilas.fondos.Selva()
+
+    #puntaje = pilas.actores.Puntaje(color='blanco')
+    puntaje.x = -300
+    puntaje.y = 220
+
+    print str(puntaje.obtener())
     vidas ()
 
     # Genera una pregunta nueva
@@ -80,7 +87,7 @@ def crear_una_nueva_pregunta():
     respuesta_verdadera.esverdadera = True
     texto_de_respuestaok = textos_posibles[indiceok]
     texto_de_respuestaok.texto = str(preg1+preg2)
-    
+
     #CAJAS FALSAS
     if caja1.esverdadera:
         rta_2.texto = str(pilas.azar(0,100))
@@ -102,6 +109,7 @@ def crear_una_nueva_pregunta():
 
 def respuesta(mono, caja):
     global cantidad_vidas
+    global puntaje
 
     if caja.esverdadera:
         mono.decir("MUY BIEN")
@@ -130,14 +138,16 @@ def respuesta(mono, caja):
 
 def iniciar_juego():
     global nombre
-    pilas.escenas.Normal()
-    pilas.fondos.Selva()
+    # global puntaje
+    # pilas.escenas.Normal()
+    # pilas.fondos.Selva()
 
     nombre=raw_input("Ingrese su nombre: ")
     reiniciar()
 
 def ayuda():
     global cantidad_vidas
+    global puntaje
   # Obtiene todos los actores de la pantalla
     actores = pilas.actores.listar_actores()
 
@@ -191,7 +201,7 @@ def ayuda():
     respuesta_verdadera.esverdadera = True
     texto_de_respuestaok = textos_posibles[indiceok]
     texto_de_respuestaok.texto = str(preg1+preg2)
-    
+
     #CAJAS FALSAS
     if caja1.esverdadera:
         rta_2.texto = str(pilas.azar(0,100))
@@ -234,6 +244,7 @@ def salir_del_juego():
 def morir():
     global nombre
     global cantidad_vidas
+    global puntaje
 
     cantidad_vidas = 3
     jugador=[nombre,puntaje.obtener()]
@@ -275,6 +286,10 @@ def mostrar_puntajes():
         valor_y = valor_y - 30
 
 def menuprincipal():
+    # global puntaje
+
+    pilas.escenas.Normal()
+    pilas.fondos.Selva()
     # Obtiene todos los actores de la pantalla.
     # actores = pilas.actores.listar_actores()
     #
@@ -286,8 +301,9 @@ def menuprincipal():
     # print nombre
     # print puntajes
 
-    pilas.escenas.Normal()
-    pilas.fondos.Selva()
+    # puntaje = pilas.actores.Puntaje(color='blanco')
+    # puntaje.x = -300
+    # puntaje.y = 220
 
     menu1 =pilas.actores.Menu([('Iniciar juego', iniciar_juego), ('Puntajes', mostrar_puntajes), ('Ayuda', ayuda), ('Salir', salir_del_juego),])
     menu1.x = 0
